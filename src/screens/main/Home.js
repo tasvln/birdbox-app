@@ -13,7 +13,8 @@ export default function Home() {
                 <Bird />
             </View>
             <View style={{ marginTop: 40 }}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Text style={{ marginBottom: 20, color: '#fff', fontFamily: 'Rubik_700Bold', fontSize: 32 }}>Spaces</Text>
                     <View style={styles.spacecard}>
                         <Text style={styles.spacetitle}>Tree House</Text>
                         <Text style={styles.spacemembers}>Allen, Allen, Allen, Allen, Allen, Allen ... </Text>
