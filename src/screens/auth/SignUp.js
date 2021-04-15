@@ -1,34 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import Bird from '../../components/svgs/Bird'
 import Wave from '../../components/svgs/Wave'
 
 import { Formik } from 'formik'
 
-import { auth } from '../../firebase/Firebase'
+import { db, auth } from '../../firebase/Firebase'
 
-export default function SignIn({ navigation }) {
-    async function signIn( values ) {
+
+export default function SignUp({ navigation }) {
+    async function register( values ) {
         try {
-         await auth.signInWithEmailAndPassword(values.email, values.password)
-         navigation.navigate('MainStack')
-         Alert.alert("Opor!", "Signed In Successfully!");
+            await auth.createUserWithEmailAndPassword(values.email, values.password);
+            const currentUser = auth.currentUser;
+        
+            db.collection("users")
+            .doc(currentUser.uid)
+            .set({
+                email: currentUser.email,
+                displayName: values.displayName,
+                createdAt: new Date()
+            });
+            navigation.replace('MainStack')
+            Alert.alert("Opor!", "User Registered");
         } catch (err) {
-          Alert.alert("Oops!", err.message)
+            Alert.alert("Oops!", err.message);
         }
     }
-
-    useEffect(() => {
-        const unsub = auth.onAuthStateChanged((user) => {
-            if (user) {
-              navigation.replace('MainStack')
-            } else {
-
-            }
-        });
-
-        return unsub
-    }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -43,15 +41,15 @@ export default function SignIn({ navigation }) {
                         </View>
                         <View style={{ marginBottom: 100, marginTop: 50 }}>
                             <View style={styles.headertext}>
-                                <Text style={{ fontSize: 42, color: '#fff', fontFamily: 'Rubik_700Bold', marginRight: 6 }}>Hellooo</Text>
+                                <Text style={{ fontSize: 32, color: '#fff', fontFamily: 'Rubik_700Bold', marginRight: 6 }}>Hey, New User</Text>
                                 <Wave />
                             </View>
-                            <Text style={{ color: '#fff', opacity: .7, fontSize: 16, textAlign:'center', marginTop: 4, fontFamily: 'Rubik_400Regular' }}>Sign In To Your Birdbox Account</Text>
+                            <Text style={{ color: '#fff', opacity: .7, fontSize: 16, textAlign:'center', marginTop: 4, fontFamily: 'Rubik_400Regular' }}>Sign Up To Use Birdbox</Text>
                         </View>
                         <Formik
-                            initialValues={{ email: '', password: '' }}
+                            initialValues={{ email: '', displayName: '', password: '' }}
                             onSubmit={async (values) => {
-                                signIn(values)
+                                register(values)
                             }}
                         >
                             {({ handleChange, handleBlur, isSubmitting, handleSubmit, values }) => (
@@ -68,6 +66,15 @@ export default function SignIn({ navigation }) {
                                     />
                                     <TextInput 
                                         style={styles.input}
+                                        placeholder='Enter Username'
+                                        placeholderTextColor="#ffffff8a"
+                                        returnKeyType='done'
+                                        onChangeText={handleChange('displayName')}
+                                        onBlur={handleBlur('displayName')}
+                                        value={values.displayName}
+                                    />
+                                    <TextInput 
+                                        style={styles.input}
                                         placeholder='Enter Password'
                                         placeholderTextColor="#ffffff8a"
                                         returnKeyType='done'
@@ -78,10 +85,10 @@ export default function SignIn({ navigation }) {
                                     />
                                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <TouchableOpacity style={styles.signinbutton} disabled={isSubmitting} onPress={handleSubmit}>
-                                            <Text style={{ color: '#557ade', fontFamily: 'Rubik_700Bold', fontSize: 18, textAlign: 'center' }}>SIGN IN</Text>
+                                            <Text style={{ color: '#557ade', fontFamily: 'Rubik_700Bold', fontSize: 18, textAlign: 'center' }}>SIGN UP</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.signupbutton} onPress={() => navigation.navigate('SignUp')}>
-                                            <Text style={{ color: '#eb7a4f', fontFamily: 'Rubik_700Bold', fontSize: 18, textAlign: 'center' }}>SIGN UP</Text>
+                                        <TouchableOpacity style={styles.signupbutton} onPress={() => navigation.navigate('SignIn')}>
+                                            <Text style={{ color: '#eb7a4f', fontFamily: 'Rubik_700Bold', fontSize: 18, textAlign: 'center' }}>SIGN IN</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

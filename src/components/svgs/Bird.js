@@ -17,7 +17,7 @@ export default function Bird(){
   </svg>
   `
 
-  const Svg = () => <SvgXml xml={svgcode} width="64px" height="64px" />;  
+  const Svg = () => <SvgXml xml={svgcode} width="60px" height="60px" />;  
 
   return <Svg />;
 }

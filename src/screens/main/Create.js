@@ -29,7 +29,7 @@ export default function Create({ navigation }) {
                                 placeholderTextColor="#ffffff8a"
                                 returnKeyType='done'
                             />
-                            <TouchableOpacity style={styles.createbutton} onPress={() => navigation.navigate('MainStack')}>
+                            <TouchableOpacity style={styles.createbutton} onPress={() => navigation.navigate('Space')}>
                                 <Text style={{ color: '#fff', fontFamily: 'Rubik_700Bold', fontSize: 18, textAlign: 'center' }}>CREATE</Text>
                             </TouchableOpacity>
                         </View>

@@ -10,12 +10,15 @@ import { Feather } from '@expo/vector-icons'
 
 // Auth Screens
 import SignIn from '../screens/auth/SignIn'
+import SignUp from '../screens/auth/SignUp'
 
 // Main Screens
 import Home from '../screens/main/Home'
 import Create from '../screens/main/Create'
 import Space from '../screens/main/Space'
 import Settings from '../screens/main/Settings'
+import Spaces from '../screens/main/Spaces'
+import Info from '../screens/main/Info'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -31,7 +34,7 @@ function HomeStackScreen() {
                 iconName = focused ? 'home' : 'home';
               } else if (route.name === 'Create') {
                 iconName = focused ? 'plus-circle' : 'plus-circle';
-              } else if (route.name === 'Space') {
+              } else if (route.name === 'Spaces') {
                 iconName = focused ? 'message-circle' : 'message-circle';
               } else if (route.name === 'Settings') {
                 iconName = focused ? 'settings' : 'settings';
@@ -54,7 +57,7 @@ function HomeStackScreen() {
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Create" component={Create} />
-            <Tab.Screen name="Space" component={Space} />
+            <Tab.Screen name="Spaces" component={Spaces} />
             <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>
     )
@@ -63,9 +66,12 @@ function HomeStackScreen() {
 export default function Routes() {
     return (
         <NavigationContainer>
-            <Stack.Navigator headerMode="none" mode="modal" screenOptions={{ animationEnabled: false }}>
+            <Stack.Navigator headerMode="none" mode="modal" screenOptions={{ gestureEnabled: true }} >
                 <Stack.Screen name="SignIn" component={SignIn} />
-                <Stack.Screen name="MainStack" component={HomeStackScreen} />
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="Space" component={Space} />
+                <Stack.Screen name="Info" component={Info} />
+                <Stack.Screen name="MainStack"  component={HomeStackScreen} options={{ gestureEnabled: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )
