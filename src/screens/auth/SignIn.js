@@ -31,7 +31,7 @@ export default function SignIn({ navigation }) {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#272B34' }}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.container}
@@ -151,6 +151,6 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         color: '#fff',
         fontSize: 18,
-        fontFamily: 'Rubik_400Regular'
+        fontFamily: 'Rubik_400Regular',
     }
 });

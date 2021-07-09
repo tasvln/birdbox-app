@@ -5,7 +5,7 @@ import NewBird from '../../components/svgs/NewBird'
 
 export default function Create({ navigation }) {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#272B34'  }}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.container}
